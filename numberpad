@@ -1,0 +1,102 @@
+计算器的数字输入
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/pay_framework_numberpad_panel_width"
+    android:layout_height="@dimen/pay_framework_numberpad_panel_height"
+    android:background="@color/transparent">
+
+    <Button
+        android:id="@+id/numberpad3"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/number3" />
+
+    <Button
+        android:id="@+id/numberpad2"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_toLeftOf="@id/numberpad3"
+        android:layout_toStartOf="@id/numberpad3"
+        android:text="@string/number2" />
+
+    <Button
+        android:id="@+id/numberpad1"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_toLeftOf="@id/numberpad2"
+        android:layout_toStartOf="@id/numberpad2"
+        android:text="@string/number1" />
+
+    <Button
+        android:id="@+id/numberpad6"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/numberpad3"
+        android:text="@string/number6" />
+
+    <Button
+        android:id="@+id/numberpad5"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_below="@id/numberpad3"
+        android:layout_toLeftOf="@id/numberpad6"
+        android:layout_toStartOf="@id/numberpad6"
+        android:text="@string/number5" />
+
+    <Button
+        android:id="@+id/numberpad4"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_below="@id/numberpad3"
+        android:layout_toLeftOf="@id/numberpad5"
+        android:layout_toStartOf="@id/numberpad5"
+        android:text="@string/number4" />
+
+    <Button
+        android:id="@+id/numberpad9"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/numberpad6"
+        android:text="@string/number9" />
+
+    <Button
+        android:id="@+id/numberpad8"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_below="@id/numberpad6"
+        android:layout_toLeftOf="@id/numberpad9"
+        android:layout_toStartOf="@id/numberpad9"
+        android:text="@string/number8" />
+
+    <Button
+        android:id="@+id/numberpad7"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_below="@id/numberpad6"
+        android:layout_toLeftOf="@id/numberpad8"
+        android:layout_toStartOf="@id/numberpad8"
+        android:text="@string/number7" />
+
+    <ImageButton
+        android:id="@+id/numberpadDel"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/numberpad9"
+        android:src="@drawable/pay_framework_del" />
+
+    <Button
+        android:id="@+id/numberpadDot"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_below="@+id/numberpad9"
+        android:layout_toLeftOf="@id/numberpadDel"
+        android:layout_toStartOf="@id/numberpadDel"
+        android:text="@string/dot" />
+
+    <Button
+        android:id="@+id/numberpad0"
+        style="@style/pay_framework_numberpad_button_white"
+        android:layout_below="@id/numberpad9"
+        android:layout_toLeftOf="@id/numberpadDot"
+        android:layout_toStartOf="@id/numberpadDot"
+        android:text="@string/number0" />
+
+</RelativeLayout>
