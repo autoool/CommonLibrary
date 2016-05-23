@@ -33,16 +33,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_exercise"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_movie"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_outdoor"/>
-
         </com.techidea.commonlibrary.widget.menu.RayMenu>
 
     </RelativeLayout>

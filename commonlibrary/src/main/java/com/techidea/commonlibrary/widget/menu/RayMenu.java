@@ -114,16 +114,15 @@ public class RayMenu extends ViewGroup {
                 childView.setVisibility(GONE);
                 childView.setClickable(false);
                 childView.setFocusable(false);
-
-                int lineTag = i / mLine;
+                //1,2,3 : 4 5 6
+                int lineTag = (i - 1) / 3;
                 int horizontalOffset = (i - 1 - lineTag * 3) * (mHorizontalSpace + mCWidth);
-                int verticalOffset = (2 - lineTag) * mVerticalSpace;
 
                 int left = horizontalOffset + mPaddingLeft;
                 int right = left + mCWidth;
                 //比按钮高
-                int top = mMeasuredHeight - (2 - lineTag) * mCHeight + 1 * mCHeight;
-                int bottom = mMeasuredHeight - (1 - lineTag) * mCHeight + 1 * mCHeight;
+                int top = mMeasuredHeight - (4 - lineTag) * mCHeight;
+                int bottom = mMeasuredHeight - (3 - lineTag) * mCHeight;
 
                 childView.layout(left, top, right, bottom);
             }
@@ -160,7 +159,7 @@ public class RayMenu extends ViewGroup {
             childView.setClickable(true);
             childView.setFocusable(true);
 
-            int lineTag = (i - 1) / mLine;
+            int lineTag = (i - 1) / 3;
 
             int verticalOffset = (2 - lineTag) * mVerticalSpace;
             int top = mMeasuredHeight - (2 - lineTag) * mCHeight - verticalOffset;
@@ -258,7 +257,7 @@ public class RayMenu extends ViewGroup {
 
             }
         });
-        mToggleBtn.startAnimation(anim);
+//        mToggleBtn.startAnimation(anim);
     }
 
     private Animation createChildViewAnim(boolean isClick, int durationMills) {
@@ -279,9 +278,9 @@ public class RayMenu extends ViewGroup {
                     Animation.RELATIVE_TO_SELF, 0.5f);
             anim.setDuration(300);
             anim.setFillAfter(true);
-            mToggleBtn.startAnimation(anim);
+//            mToggleBtn.startAnimation(anim);
         } else {
-            mToggleBtn.startAnimation(createChildViewAnim(false, 300));
+//            mToggleBtn.startAnimation(createChildViewAnim(false, 300));
         }
     }
 

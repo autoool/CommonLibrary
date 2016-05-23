@@ -109,20 +109,21 @@ public class ArcMenu extends ViewGroup implements View.OnClickListener {
                 View child = getChildAt(i + 1);
                 child.setVisibility(View.GONE);
 
-                int cl = (int) (mRadius * Math.sin(Math.PI / 2 / (count - 2) * i));
-                int ct = (int) (mRadius * Math.cos(Math.PI / 2 / (count - 2) * i));
+                int cleft = (int) (mRadius * Math.sin(Math.PI / 2 / (count - 2) * i));
+                int ctop = (int) (mRadius * Math.cos(Math.PI / 2 / (count - 2) * i));
                 int cWidth = child.getMeasuredWidth();
                 int cHeight = child.getMeasuredHeight();
 
                 //右上 右下
                 if (mPosition == Position.LEFT_BOTTOM
                         || mPosition == Position.RIGHT_BOTTOM) {
-                    ct = getMeasuredHeight() - cHeight - ct;
+                    ctop = getMeasuredHeight() - cHeight - ctop;
                 }
                 if (mPosition == Position.RIGHT_TOP ||
                         mPosition == Position.RIGHT_BOTTOM)
-                    cl = getMeasuredWidth() - cWidth - cl;
-                child.layout(cl, ct, cl + cWidth, ct + cHeight);
+                    cleft = getMeasuredWidth() - cWidth - cleft;
+//                left, top, right, bottom
+                child.layout(cleft, ctop, cleft + cWidth, ctop + cHeight);
             }
         }
     }
@@ -157,13 +158,11 @@ public class ArcMenu extends ViewGroup implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-//        mButton = findViewById(R.id.id_button);
         if (mButton == null) {
             mButton = getChildAt(0);
         }
         rotateView(mButton,0f,270f,300);
         toggleMenu(300);
-
     }
 
     public static void rotateView(View view, float fromDegress,
