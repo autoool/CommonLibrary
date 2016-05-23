@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridView;
 
+import com.techidea.commondemo.menu.ArcMenuActivity;
 import com.techidea.commondemo.adapter.GridViewAdapter;
 import com.techidea.commondemo.adapter.PayItem;
+import com.techidea.commondemo.menu.RayMenuActivity;
+import com.techidea.commondemo.recyclerview.GridActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.button_recycler_grid)
     void buttonGrid() {
         startActivity(new Intent(this, GridActivity.class));
+    }
+
+    @OnClick(R.id.button_arcmenu)
+    void buttonArcMenu() {
+        startActivity(new Intent(this, ArcMenuActivity.class));
+    }
+
+    @OnClick(R.id.button_raymenu)
+    void buttonRayMenu() {
+        startActivity(new Intent(this, RayMenuActivity.class));
     }
 
     @Override

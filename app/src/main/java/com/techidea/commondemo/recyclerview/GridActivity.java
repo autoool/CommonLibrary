@@ -1,4 +1,4 @@
-package com.techidea.commondemo;
+package com.techidea.commondemo.recyclerview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.techidea.commondemo.R;
 import com.techidea.commonlibrary.adapter.DividerGridItemDecoration;
 import com.techidea.commondemo.adapter.PayItem;
 import com.techidea.commondemo.adapter.RecyclerviewGridAdapter;

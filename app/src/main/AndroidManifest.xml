@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.techidea.commondemo">
+          package="com.techidea.commondemo">
 
     <application
         android:allowBackup="true"
@@ -10,12 +10,14 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.techidea.commondemo.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.techidea.commondemo.GridActivity"/>
+        <activity android:name=".recyclerview.GridActivity"/>
+        <activity android:name=".menu.ArcMenuActivity"/>
+        <activity android:name=".menu.RayMenuActivity"/>
     </application>
 
 </manifest>
