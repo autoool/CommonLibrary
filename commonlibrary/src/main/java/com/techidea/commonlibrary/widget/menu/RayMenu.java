@@ -1,9 +1,7 @@
 package com.techidea.commonlibrary.widget.menu;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +9,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.OvershootInterpolator;
-import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
-
-import com.techidea.commonlibrary.R;
 
 /**
  * Created by zchao on 2016/5/23.
@@ -102,7 +97,7 @@ public class RayMenu extends ViewGroup {
             mCHeight = firstChildView.getMeasuredHeight();
 
             mHorizontalSpace = (mActualWidth - 3 * mCWidth) / 2;
-            mVerticalSpace = dip2px(mContext, 40);
+            mVerticalSpace = dip2px(mContext, 10);
 
             layoutFirstChildView(firstChildView);
 
@@ -121,14 +116,15 @@ public class RayMenu extends ViewGroup {
                 int left = horizontalOffset + mPaddingLeft;
                 int right = left + mCWidth;
                 //比按钮高
-                int top = mMeasuredHeight - (4 - lineTag) * mCHeight;
-                int bottom = mMeasuredHeight - (3 - lineTag) * mCHeight;
+                int top = mMeasuredHeight - (2 - lineTag) * mCHeight - mVerticalSpace;
+                int bottom = mMeasuredHeight - (1 - lineTag) * mCHeight - mVerticalSpace;
 
                 childView.layout(left, top, right, bottom);
             }
         }
     }
 
+    //第一个按钮居中
     private void layoutFirstChildView(View firstChildView) {
         int cWidth = firstChildView.getMeasuredWidth();
         int cHeight = firstChildView.getMeasuredHeight();
@@ -145,37 +141,44 @@ public class RayMenu extends ViewGroup {
             public void onClick(View v) {
                 mToggleBtn = getChildAt(0);
                 toggleMenu(300);
-                changeStatus(true);
             }
         });
-
     }
 
     public void toggleMenu(int durationMillis) {
         int childCount = getChildCount();
-        for (int i = 1; i < childCount; i++) {
-            View childView = getChildAt(i);
-            childView.setVisibility(View.VISIBLE);
-            childView.setClickable(true);
-            childView.setFocusable(true);
+        if (!mIsOpen) {
+            for (int i = 1; i < childCount; i++) {
+                View childView = getChildAt(i);
+                childView.setVisibility(View.VISIBLE);
+                childView.setClickable(true);
+                childView.setFocusable(true);
 
-            int lineTag = (i - 1) / 3;
+                int lineTag = (i - 1) / 3;
 
-            int verticalOffset = (2 - lineTag) * mVerticalSpace;
-            int top = mMeasuredHeight - (2 - lineTag) * mCHeight - verticalOffset;
+                int verticalOffset = (2 - lineTag) * mVerticalSpace;
+                int top = mMeasuredHeight - (2 - lineTag) * mCHeight - verticalOffset;
 
-            createBindMenuAnim(childView, childCount, i, top, durationMillis);
+                createBindMenuAnim(childView, childCount, i, top, durationMillis);
 
-            childView.setTag(i);
+                childView.setTag(i);
 
-            childView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    bindMenuItemAnim(v, (Integer) v.getTag());
-                }
-            });
+                childView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bindMenuItemAnim(v, (Integer) v.getTag());
+                    }
+                });
+            }
+        } else {
+            for (int i = 1; i < childCount; i++) {
+                View childView = getChildAt(i);
+                childView.setVisibility(GONE);
+                childView.setClickable(false);
+                childView.setFocusable(false);
+            }
         }
-
+        changeStatus();
     }
 
 
@@ -257,7 +260,6 @@ public class RayMenu extends ViewGroup {
 
             }
         });
-//        mToggleBtn.startAnimation(anim);
     }
 
     private Animation createChildViewAnim(boolean isClick, int durationMills) {
@@ -270,18 +272,8 @@ public class RayMenu extends ViewGroup {
         return anim;
     }
 
-    private void changeStatus(boolean isOpen) {
-        mIsOpen = isOpen;
-        if (!mIsOpen) {
-            Animation anim = new ScaleAnimation(0f, 1.0f, 0, 1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.5f,
-                    Animation.RELATIVE_TO_SELF, 0.5f);
-            anim.setDuration(300);
-            anim.setFillAfter(true);
-//            mToggleBtn.startAnimation(anim);
-        } else {
-//            mToggleBtn.startAnimation(createChildViewAnim(false, 300));
-        }
+    private void changeStatus() {
+        mIsOpen = !mIsOpen ? true : false;
     }
 
     @Override
@@ -289,7 +281,6 @@ public class RayMenu extends ViewGroup {
         int action = event.getAction();
         if (mIsOpen && action == MotionEvent.ACTION_DOWN) {
             toggleMenu(300);
-            changeStatus(false);
         }
         return super.onTouchEvent(event);
     }
