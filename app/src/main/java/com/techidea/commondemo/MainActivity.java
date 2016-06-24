@@ -10,6 +10,7 @@ import com.techidea.commondemo.adapter.GridViewAdapter;
 import com.techidea.commondemo.adapter.PayItem;
 import com.techidea.commondemo.menu.RayMenuActivity;
 import com.techidea.commondemo.recyclerview.GridActivity;
+import com.techidea.updatemanager.HttpRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     private List<PayItem> mPayItemList;
     private GridViewAdapter mGridViewAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         mPayItemList.add(new PayItem(R.drawable.card, "银行卡"));
         mPayItemList.add(new PayItem(R.drawable.cash, "现金"));
         mPayItemList.add(new PayItem(R.drawable.discount, "折扣"));
+    }
+
+    @OnClick(R.id.button_recycler_list)
+    void buttonList(){
+        HttpRequest httpRequest = new HttpRequest();
     }
 
     @OnClick(R.id.button_recycler_grid)

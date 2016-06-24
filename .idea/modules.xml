@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/CommonLibrary.iml" filepath="$PROJECT_DIR$/CommonLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlibrary/commonlibrary.iml" filepath="$PROJECT_DIR$/commonlibrary/commonlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/updatemanager/updatemanager.iml" filepath="$PROJECT_DIR$/updatemanager/updatemanager.iml" />
     </modules>
   </component>
 </project>
