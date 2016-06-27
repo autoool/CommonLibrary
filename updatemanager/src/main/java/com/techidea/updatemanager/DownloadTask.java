@@ -17,12 +17,6 @@ public class DownloadTask extends AsyncTask<String, Integer, Void> {
 
     private static final int BUFFER_SIZE = 10 * 1024;
 
-    public static enum STATE {
-        SUCCESS,
-        HTTP_ERROE,
-        FILE_IOERROR
-    }
-
     private Context mContext;
     private UpdateInfo mUpdateInfo;
     private InputStream in = null;

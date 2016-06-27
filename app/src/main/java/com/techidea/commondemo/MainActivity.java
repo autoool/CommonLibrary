@@ -1,6 +1,5 @@
 package com.techidea.commondemo;
 
-import android.app.DownloadManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +14,6 @@ import com.techidea.commondemo.adapter.PayItem;
 import com.techidea.commondemo.menu.RayMenuActivity;
 import com.techidea.commondemo.recyclerview.GridActivity;
 import com.techidea.updatemanager.DownloadTask;
-import com.techidea.updatemanager.HttpRequest;
-import com.techidea.updatemanager.NotifyMessage;
 import com.techidea.updatemanager.UpdateInfo;
 import com.techidea.updatemanager.UpdateManager;
 import com.techidea.updatemanager.UpdateOptions;
