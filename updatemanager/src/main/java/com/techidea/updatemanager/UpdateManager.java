@@ -49,7 +49,7 @@ public class UpdateManager {
         mCallback = new DownloadTask.Callback() {
             @Override
             public void onProgressUpdate(int progress) {
-                mBuilder.setProgress(100, 50, false);
+                mBuilder.setProgress(100, progress, false);
                 mNotificationManager.notify(nofityId, mBuilder.build());
             }
 
@@ -94,9 +94,8 @@ public class UpdateManager {
                     .getActivity(mContext, 0, installIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
-            Notification noti = mBuilder.build();
-            noti.flags = Notification.FLAG_AUTO_CANCEL;
-            mNotificationManager.notify(0, noti);
+            mBuilder.setAutoCancel(true);
+            mNotificationManager.notify(nofityId, mBuilder.build());
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -166,7 +165,7 @@ public class UpdateManager {
             UpdateInfo updateInfo = new UpdateInfo();
             updateInfo.setAutoUpdate(true);
             updateInfo.setForceUpdate(false);
-            updateInfo.setApkUrl("community.apk");
+            updateInfo.setApkUrl("http://www.northnanshan.com/images/note/1.png");
             updateInfo.setPackageName("");
             updateInfo.setUpdateMessage("update");
             updateInfo.setVersionCode("2");
