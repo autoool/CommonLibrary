@@ -1,7 +1,10 @@
 package com.techidea.updatemanager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,7 +16,7 @@ import java.net.URL;
 /**
  * Created by zchao on 2016/6/27.
  */
-public class DownloadTask extends AsyncTask<String, Integer, Void> {
+public class DownloadTask extends AsyncTask<String, Integer, Boolean> {
 
     private static final int BUFFER_SIZE = 10 * 1024;
 
@@ -21,14 +24,16 @@ public class DownloadTask extends AsyncTask<String, Integer, Void> {
     private UpdateInfo mUpdateInfo;
     private InputStream in = null;
     private FileOutputStream out = null;
+    private String filePath = "";
+    private String errorMsg = "";
+
 
     public interface Callback {
         void onProgressUpdate(int progress);
 
-        void onFifish(String filepath);
+        void onSuccess(String filepath);
 
-        void onFailed(String msg);
-
+        void onFailed();
     }
 
     private Callback mCallback;
@@ -45,7 +50,7 @@ public class DownloadTask extends AsyncTask<String, Integer, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected Boolean doInBackground(String... params) {
         try {
             URL url = new URL(mUpdateInfo.getApkUrl());
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -72,7 +77,6 @@ public class DownloadTask extends AsyncTask<String, Integer, Void> {
                 while ((byteread = in.read(buffer)) != -1) {
                     bytesum += byteread;
                     out.write(buffer, 0, byteread);
-
                     int progress = (int) (bytesum * 100L / bytetotal);
                     if (progress != oldProgress) {
                         if (mCallback != null)
@@ -80,21 +84,15 @@ public class DownloadTask extends AsyncTask<String, Integer, Void> {
                     }
                     oldProgress = progress;
                 }
-                if (mCallback != null)
-                    mCallback.onFifish(apkFile.getAbsolutePath());
-            } else {
-                // TODO: 2016/6/27 下载出错
-                if (mCallback != null)
-                    mCallback.onFailed(urlConnection.getResponseMessage());
+                filePath = apkFile.getAbsolutePath();
+                return true;
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            if (mCallback != null)
-                mCallback.onFailed(ioe.getMessage());
+            errorMsg = ioe.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
-            if (mCallback != null)
-                mCallback.onFailed(e.getMessage());
+            errorMsg = e.getMessage();
         } finally {
             try {
                 if (out != null) {
@@ -102,25 +100,46 @@ public class DownloadTask extends AsyncTask<String, Integer, Void> {
                 }
             } catch (IOException ioe) {
                 ioe.printStackTrace();
+                errorMsg = ioe.getMessage();
             }
             try {
                 if (in != null)
                     in.close();
             } catch (IOException ioe) {
                 ioe.printStackTrace();
+                errorMsg = ioe.getMessage();
             }
         }
-        return null;
+        return false;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(Boolean success) {
+        if (!success) {
+            handleErrorMessage(errorMsg);
+            if (mCallback != null)
+                mCallback.onFailed();
+        } else {
+            if (!TextUtils.isEmpty(filePath))
+                if (mCallback != null)
+                    mCallback.onSuccess(filePath);
+        }
     }
 
-    @Override
-    protected void onProgressUpdate(Integer... values) {
-        super.onProgressUpdate(values);
+    public void handleErrorMessage(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("下载失败");
+        if (!TextUtils.isEmpty(msg) && msg.length() > 200) {
+            msg.substring(0, 150);
+        }
+        builder.setMessage(msg);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
-
-
 }

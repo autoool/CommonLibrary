@@ -1,6 +1,5 @@
 package com.techidea.updatemanager;
 
-import android.content.ContentProviderOperation;
 import android.content.Context;
 
 import java.util.Map;

@@ -94,12 +94,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFifish(String filepath) {
+                public void onSuccess(String filepath) {
 
                 }
 
                 @Override
-                public void onFailed(String msg) {
+                public void onFailed() {
 
                 }
             }, updateInfo);

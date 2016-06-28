@@ -24,7 +24,7 @@ public class HttpRequest {
      * @param param  deviceId=123123&deviceName=HANDPOS
      * @return
      */
-    public UpdateInfo post(String url, String param) {
+    public UpdateInfo postUpdate(String url, String param) {
         HttpURLConnection connection = null;
         UpdateInfo updateInfo = null;
         try {

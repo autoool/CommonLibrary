@@ -1,7 +1,6 @@
 package com.techidea.updatemanager;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,9 +12,12 @@ import android.content.pm.PackageManager;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
@@ -54,14 +56,16 @@ public class UpdateManager {
             }
 
             @Override
-            public void onFifish(String filePath) {
+            public void onSuccess(String filePath) {
                 install(filePath);
                 mDownloadTask = null;
             }
 
             @Override
-            public void onFailed(String msg) {
-                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+            public void onFailed() {
+                mBuilder.setContentTitle("下载失败");
+                mBuilder.setProgress(0, 0, false);
+                mNotificationManager.notify(nofityId, mBuilder.build());
                 mDownloadTask = null;
             }
         };
@@ -93,8 +97,11 @@ public class UpdateManager {
             PendingIntent pendingIntent = PendingIntent
                     .getActivity(mContext, 0, installIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
+            mBuilder.setContentTitle("点击安装更新");
+            mBuilder.setProgress(0, 0, false);
             mBuilder.setContentIntent(pendingIntent);
             mBuilder.setAutoCancel(true);
+            mBuilder.setVisibility(View.GONE);
             mNotificationManager.notify(nofityId, mBuilder.build());
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -158,14 +165,14 @@ public class UpdateManager {
                 return null;
             }
             try {
-                mUpdateInfo = mHttpRequest.post(url, param);
+                mUpdateInfo = mHttpRequest.postUpdate(url, param);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             UpdateInfo updateInfo = new UpdateInfo();
             updateInfo.setAutoUpdate(true);
             updateInfo.setForceUpdate(false);
-            updateInfo.setApkUrl("http://www.northnanshan.com/images/note/1.png");
+            updateInfo.setApkUrl("http://mserver.conv-store.alpha.testing.fantayun.cn/download/yunposmobil.alpha.apk");
             updateInfo.setPackageName("");
             updateInfo.setUpdateMessage("update");
             updateInfo.setVersionCode("2");
@@ -244,7 +251,23 @@ public class UpdateManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public void handleErrorMessage(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("系统提示");
+        if (!TextUtils.isEmpty(msg) && msg.length() > 200) {
+            msg.substring(0, 150);
+        }
+        builder.setMessage(msg);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }
