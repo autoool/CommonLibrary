@@ -1,1 +1,1 @@
-include ':app', ':commonlibrary', ':updatemanager'
+include ':app', ':commonlibrary'

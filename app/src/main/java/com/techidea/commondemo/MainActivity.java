@@ -1,9 +1,6 @@
 package com.techidea.commondemo;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridView;
@@ -13,15 +10,9 @@ import com.techidea.commondemo.adapter.GridViewAdapter;
 import com.techidea.commondemo.adapter.PayItem;
 import com.techidea.commondemo.menu.RayMenuActivity;
 import com.techidea.commondemo.recyclerview.GridActivity;
-import com.techidea.updatemanager.DownloadTask;
-import com.techidea.updatemanager.UpdateInfo;
-import com.techidea.updatemanager.UpdateManager;
-import com.techidea.updatemanager.UpdateOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,11 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private List<PayItem> mPayItemList;
     private GridViewAdapter mGridViewAdapter;
-    private UpdateManager mUpdateManager;
-    private UpdateOptions mUpdateOptions;
-    private NotificationManager mNotificationManager;
-    private NotificationCompat.Builder mBuilder;
-    private int id = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +34,6 @@ public class MainActivity extends AppCompatActivity {
         initData();
         mGridViewAdapter = new GridViewAdapter(this, mPayItemList, R.layout.view_pay_item);
         mGridView.setAdapter(mGridViewAdapter);
-        Map<String, String> params = new HashMap<>();
-        mUpdateOptions = new UpdateOptions.Builder(this)
-                .checkUrl("https://github.com/chaozaiai/article/blob/master/app-alpha_commontest-release-unsigned.apk")
-                .checkPackageName(false)
-                .setParam(params)
-                .build();
-        mUpdateManager = new UpdateManager(this);
-        mUpdateManager.check(this, mUpdateOptions);
-
-
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setContentTitle("picture download")
-                .setContentText("download in progress")
-                .setSmallIcon(R.drawable.ic_eat);
 
     }
 
@@ -77,36 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_recycler_list)
     void buttonList() {
-        try {
-            UpdateInfo updateInfo = new UpdateInfo();
-            updateInfo.setAutoUpdate(true);
-            updateInfo.setForceUpdate(false);
-            updateInfo.setApkUrl("community.apk");
-            updateInfo.setPackageName("");
-            updateInfo.setUpdateMessage("update");
-            updateInfo.setVersionCode("2");
-            updateInfo.setVersionName("2.0.1");
-            updateInfo.setPackageMD5("");
-            DownloadTask downloadTask = new DownloadTask(this, new DownloadTask.Callback() {
-                @Override
-                public void onProgressUpdate(int progress) {
-
-                }
-
-                @Override
-                public void onSuccess(String filepath) {
-
-                }
-
-                @Override
-                public void onFailed() {
-
-                }
-            }, updateInfo);
-            downloadTask.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @OnClick(R.id.button_recycler_grid)
